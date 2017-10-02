@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from runner.koan import *
+from collections import Counter
 
 # Greed is a dice game where you roll up to five dice to accumulate
 # points.  The following "score" function will be used calculate the
@@ -34,7 +35,23 @@ from runner.koan import *
 
 def score(dice):
     # You need to write this method
-    pass
+    score = 0
+    c = Counter()
+    for val in dice:
+       c[val] += 1
+
+    # Cases
+    if c[1] >= 3:
+        c[1] -= 3
+        score += 1000
+    score += (100 * c[1])
+    for idx in range(2,7):
+        if c[idx] >= 3:
+            c[idx] -= 3
+            score += (100 * idx)
+    score += (50 * c[5])
+    return score  
+ 
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
